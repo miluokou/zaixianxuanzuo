@@ -31,7 +31,9 @@ $user = new $controller();
 //调用控制器方法
 $user->$action();
 */
-
+if(!empty($_GET['quren'])){
+    
+}
 $cm=new CourseModel();
 echo '<pre>';
 var_dump($cm->getRec());die;
