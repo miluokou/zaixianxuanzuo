@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>注册登录界面</title>
+	</head>
+	<body>
+		<form action="../controller/LoginController.php" method="post">
+			用户名:<input type="text" name="acc" required autofocus autocomplete><?php echo $_SESSION['accerr']; ?> <br />
+			密码:<input type="password" name="pass"><br />
+			类型:<select name="type">
+				<option value="2" selected="selected">学生</option>
+				<option value="1">教师</option>
+				<option value="0">管理员</option>	
+			</select>
+			验证码: <img id="captcha_img" border='1' src='../controller/captcha.php?r=echo rand(); ?>' style="width:100px; height:30px" />
+			<a href="javascript:void(0)" onclick="document.getElementById('captcha_img').src='../controller/captcha.php?r='+Math.random()">换一个?</a>
+			<br />
+			请输入验证码:<input type="text" name="yzm" required>
+			<input type='submit' value="登录"><br />
+			<a href="register.html">还没有账户？现在就注册一个</a>
+		</form> 
+		<?php echo $_SESSION['err']; ?>
+
+	</body>
+</html>
