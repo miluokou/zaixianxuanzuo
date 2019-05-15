@@ -36,7 +36,7 @@
         //数据库连接
         public  function  connect(){
         	//配置连接数据,面向对象写法的连接
-        	$this->conn = new mysqli('localhost','root','','test');
+        	$this->conn = new mysqli('localhost','root','root','test2');
         	//设置编码
         	$this->conn->query("SET NAMES 'utf8'");    
         	if($this->conn->connect_error){
@@ -63,12 +63,12 @@
         	//执行一条sql查询出多条数据
         	public function select($sql){
         		$result = $this->conn->query($sql);
-                $row= $result->fetch_array(1);
-        		//fetch_array函数:把查询结果的一行作为一个关联数组
-        		// while($row= $result->fetch_array()){
-        		// 	$data[] = $row;
-        		// }
-        		return $row;
+//                $row= $result->fetch_array(1);
+//        		fetch_array函数:把查询结果的一行作为一个关联数组
+        		 while($row= $result->fetch_array(1)){
+        		 	$data[] = $row;
+        		 }
+        		return $data;
         	}
         	
         	//防止sql注入,对输入数据进行处理
@@ -79,17 +79,7 @@
         		$value = $this->conn->real_escape_string($value);      		
         		return $value;
         	}
-        	
-        	//预处理语句查询user表,判断能否登录
-        	public function login($acc,$pass,$type)
-        	{
-        		//预处理及绑定
-        		$stmt = $this->conn->prepare("select count(*) from user where acc=? and pass=? and type=?"); 
-        		$stmt->bind_param("sss", $acc, $pass, $type);
-        		return $this->data = $this->conn->find($stmt);
-        	}      
-        	
-        	
+
    
     }
 ?>

@@ -1,7 +1,10 @@
 
 <?php
-ini_set('display_errors','On');
-error_reporting(E_ALL);
+ini_set("display_errors", "On");
+error_reporting(E_ALL | E_STRICT);
+//var_dump('123');die;
+
+//ini_set('display_errors', '0');
 /**
  * 
  */
@@ -11,7 +14,7 @@ require "model/Db.php";
 require "model/Model.php";
 require "model/CourseModel.php";
 require "controller/UserController.php";
-
+require 'model/ClassRoomModel.php';
 /*
  * 当用户点击注册，登录或者讨论区再写这个玩意儿
  */
@@ -31,12 +34,12 @@ $user = new $controller();
 //调用控制器方法
 $user->$action();
 */
-if(!empty($_GET['quren'])){
-    
-}
+//if(!empty($_GET['column']) && $_GET['column'] =='1'&){
+//
+//}
 $cm=new CourseModel();
-echo '<pre>';
-var_dump($cm->getRec());die;
+$classRom = new ClassRoomModel();
+$classRom->get_class_room_list();
 
 // $data=$cm->getRec();
 // echo json_encode($data);
