@@ -2,64 +2,57 @@
 <?php
 ini_set("display_errors", "On");
 error_reporting(E_ALL | E_STRICT);
-//var_dump('123');die;
 
-//ini_set('display_errors', '0');
-/**
- * 
- */
-//入口文件，前端请求分发器
 
 require "model/Db.php";
 require "model/Model.php";
 require "model/CourseModel.php";
 require "controller/UserController.php";
 require 'model/ClassRoomModel.php';
-/*
- * 当用户点击注册，登录或者讨论区再写这个玩意儿
- */
-/*
-//假设用c参数代表控制器,a参数代表方法
-//isset()函数测试变量是否为null,为null则返回false
-$controller = isset($_GET['c'])?$_GET['c']:"User";   
-$action = isset($_GET['a'])?$_GET['a']:"getRec";
+$cm=new CourseModel();
+$classRom = new ClassRoomModel();
 
-$controller .="Controller"; //控制器添加后缀
-
-//加载控制器类
- require "controller/".$controller.".php";
-
-//实例化控制器类
-$user = new $controller();
-//调用控制器方法
-$user->$action();
-*/
-//if(!empty($_GET['column']) && $_GET['column'] =='1'&){
-//
-//}
 if(!empty($_GET['classroom'])){
     if($_GET['classroom']=='delete' && !empty($_GET['id'])){
-        $cm=new CourseModel();
-        $classRom = new ClassRoomModel();
         $res  = $classRom->delete_class_room($_GET['id']);
-        echo json_encode($res);
-    }
-    if($_GET['classroom']=='all'){
-        $cm=new CourseModel();
-        $classRom = new ClassRoomModel();
+    }elseif($_GET['classroom']=='all'){
+
         $res  = $classRom->get_class_room_list();
-        echo json_encode($res);
+
     }
 
 }
 
+if(!empty($_GET['type'])){
+    if($_GET['type']=='list'){
+        $res  = $classRom->class_room_name_list();
+    }
+    if($_GET['type']=='diff' && !empty($_GET['pai'])&& !empty($_GET['lie'])&& !empty($_GET['start_at'])&& !empty($_GET['end_at'])&& !empty($_GET['diffList'])){
 
-// $data=$cm->getRec();
-// echo json_encode($data);
-/*foreach ($data as $value) {
-    echo $value['title']."\n";
-    echo $value['image']."\n";
-}*/
-// die;
+//        zuoweilist
+        $ccc = str_repeat('c',$_GET['pai']);
+        for($i=1;$i<=$_GET['lie'];$i++){
+                $cccFormate[$i] = str_split($ccc);
+        }
+        foreach($_GET['diffList'] as $diffv){
+            $ssss = explode('_',$diffv);
+            $cccFormate[$ssss[0]-1][$ssss[1]-1]='_';
+
+        }
+        foreach ($cccFormate as $kk=>$split){
+            $cccFormate2[] = implode('',$split);
+        }
+        $seat_formate = serialize($cccFormate2);
+//        str_repeat
+
+        $res  = $classRom->room_diff($_GET,$seat_formate);
+
+    }
+
+}
+//class_room_name_list
+
+echo json_encode($res);
+
 
 ?>

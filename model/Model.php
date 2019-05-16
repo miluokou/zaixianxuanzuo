@@ -22,6 +22,7 @@
 			$this->conn = Db::getInstance();     
 		}
 		public function dateFormate($time){
+            $time = str_replace("+"," ",$time);
             return date("Y-m-d H:i:s",strtotime($time));
         }
 		

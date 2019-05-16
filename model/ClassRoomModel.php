@@ -17,20 +17,29 @@
 			return $res;
 //			return $this->data = $stmt;
 		}
+
+        public function room_diff($get,$cccFormate2){
+
+            $classRoomName =$get['classroomName'];
+
+            $start_at = $this->dateFormate($get['start_at']);
+
+            $end_at = $this->dateFormate($get['end_at']);
+            $seat_formate = $cccFormate2;
+
+            $sql = "INSERT INTO class_room (name,seat_formate,start_at,end_at) VALUES ('".$classRoomName."','".$seat_formate."','".$start_at."','".$end_at."');";
+            $stmt = $this->conn->exec($sql);
+            $data['name'] = $stmt;
+            return $data;
+        }
         public function class_room_name_list(){
             $stmt = $this->conn->select("select name from class_room;");
-//			echo '<pre>';
-//            var_dump($stmt);
-//            foreach ($stmt as $key =>$values){
-//                $res[$key]['id']= $key +1;
-//                $res[$key]['name']= $values['name'];
-//                $res[$key]['valueTime']= $this->dateFormate($values['start_at']).'~'.$this->dateFormate($values['start_at']);
-//            }
             return $stmt;
-//			return $this->data = $stmt;
         }
         public function delete_class_room($id){
-            $stmt = $this->conn->exec("DELETE FROM class_room WHERE name = $id ");
+//		    var_dump("DELETE FROM class_room WHERE name = $id ");
+//		    die;
+            $stmt = $this->conn->exec("DELETE FROM class_room WHERE name ='".$id."'");
             $data['name'] = $stmt;
             return $data;
 //			return $this->data = $stmt;

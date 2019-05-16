@@ -124,7 +124,28 @@
 
     var price = 100;
     $(document).ready(function() {
+        var column = getQueryString("column");
+        if(!column){
+            $.ajax({
+                url: "/api.php",
+                data: {classroom: 'all'},
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    // var ata2 = data;
+                    html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html+'<option value="cheese">'+data[i].name+'</option>';
 
+                        // document.write(cars[i] + "<br>");valueTime
+
+                    }
+                    $('#classroomdetail').html(html);
+                }
+
+            });
+        }
         $.ajax({
             url: "/api.php",
             data: {classroom: 'all'},
@@ -142,19 +163,12 @@
 
                 }
                 $('#jiaoshiguanli').html(html);
-                // return ata2;
-                // alert('123');
-                // for i in data :
-                //
-                //     console.log(data[i]);
-                // data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
-                // ...
             }
 
         });
         $(document).on('click','.deletedClick',function(){
             var sa = $(this).parent().parent().find("td").eq(1).html();
-            // console.log(sa);
+            console.log(sa);
             $.ajax({
                 url: "/api.php",
                 data: {classroom: 'delete',id:sa},
@@ -163,28 +177,10 @@
                 success: function(data) {
                     if(data.name){
                         alert('删除成功');
+                        window.location.reload();
                     } else{
                         alert('删除失败');
                     }
-
-                    // var ata2 = data;
-                    // html = '';
-                    // for (var i=0;i<data.length;i++)
-                    // {
-                    //     html = html+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].valueTime+'</td><td><button type="button" class="btn btn-danger btn-toastr deletedClick" data-context="info" data-message="This is general theme info" data-position="top-right">删除</button></td></tr>';
-                    //
-                    //     // document.write(cars[i] + "<br>");valueTime
-                    //
-                    //
-                    // }
-                    // $('#jiaoshiguanli').html(html);
-                    // return ata2;
-                    // alert('123');
-                    // for i in data :
-                    //
-                    //     console.log(data[i]);
-                    // data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
-                    // ...
                 }
 
             });
@@ -204,6 +200,16 @@
             var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
             var r = window.location.search.substr(1).match(reg);
             if(r!=null)return  unescape(r[2]); return null;
+        }
+        function getUrlParam(key) {
+            // 获取参数
+            var url = window.location.search;
+            // 正则筛选地址栏
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            // 匹配目标参数
+            var result = url.substr(1).match(reg);
+            //返回参数值
+            return result ? decodeURIComponent(result[2]) : null;
         }
         var map = [ //座位结构图 a 代表座位; 下划线 "_" 代表过道
             'cccccccccc',
@@ -254,8 +260,7 @@
             // console.log(map);
             var zuoweilist = new Array();
             var i =0;
-            $('#querenxuanzuo').click(function(){
-
+            $(document).on('click','#querenxuanzuo',function(){
                 var ids = $('#seats_chose li').attr('id');
                 $('#seats_chose li').each(function () {
                     var jieguo = $(this).attr('id');
@@ -265,7 +270,36 @@
                     zuoweilist[i] = resss;
                     i++;
                 });
-                sc.get(zuoweilist).status('unavailable');
+                var start_at = getQueryString("start_at");
+                var end_at = getQueryString("end_at");
+                var  classroomName= getUrlParam("classroomName");
+                // console.log(classroomName);
+
+                $.ajax({
+                    url: "/api.php",
+                    data: {
+                        type: 'diff',
+                        start_at:start_at,
+                        end_at:end_at,
+                        diffList:zuoweilist,
+                        pai:pai,
+                        lie:lie,
+                        classroomName:classroomName,
+                    },
+                    type: "get",
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.name){
+
+                            sc.get(zuoweilist).status('unavailable');
+                            window.location.href = "/";
+                        } else{
+                            alert('失败');
+                        }
+                    }
+
+                });
+
 
 
 
