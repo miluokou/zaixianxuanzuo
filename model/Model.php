@@ -20,7 +20,10 @@
 		public function init(){
 			//调用Db类的静态方法获取唯一实例对象instance
 			$this->conn = Db::getInstance();     
-		}		
+		}
+		public function dateFormate($time){
+            return date("Y-m-d H:i:s",strtotime($time));
+        }
 		
 		// public function login(){
 		// 	$this->conn=$this->ins->test();

@@ -20,6 +20,10 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
     <style type="text/css">/*.front{width: 300px;margin: 5px 32px 45px 32px;background-color: #f0f0f0; color: #666;text-align: center;padding: 3px;border-radius: 5px;}*/ .booking_area {float: right;position: relative;width:200px;height: 450px; } .booking_area h3 {margin: 5px 5px 0 0;font-size: 16px;} .booking_area p{line-height:26px; font-size:16px; color:#999} .booking_area p span{color:#666} div.seatCharts-cell {color: #182C4E;height: 25px;width: 25px;line-height: 25px;margin: 3px;float: left;text-align: center;outline: none;font-size: 13px;} div.seatCharts-seat {color: #fff;cursor: pointer;-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;} div.seatCharts-row {height: 35px;} div.seatCharts-seat.available {background-color: #B9DEA0;} div.seatCharts-seat.focused {background-color: #76B474;border: none;} div.seatCharts-seat.selected {background-color: #E6CAC4;} div.seatCharts-seat.unavailable {background-color: #472B34;cursor: not-allowed;} div.seatCharts-container {width: 900px;padding: 20px;float: left;} div.seatCharts-legend {padding-left: 0px;position: absolute;bottom: 16px;} ul.seatCharts-legendList {padding-left: 0px;} .seatCharts-legendItem{float:left; width:90px;margin-top: 10px;line-height: 2;} span.seatCharts-legendDescription {margin-left: 5px;line-height: 30px;} .checkout-button {display: block;width:80px; height:24px; line-height:20px;margin: 10px auto;border:1px solid #999;font-size: 14px; cursor:pointer} #seats_chose {max-height: 150px;overflow-y: auto;overflow-x: none;width: 200px;} #seats_chose li{float:left; width:72px; height:26px; line-height:26px; border:1px solid #d3d3d3; background:#f7f7f7; margin:6px; font-size:14px; font-weight:bold; text-align:center}</style></head>
 
 <body>
@@ -109,16 +113,87 @@
 </div>
 <!-- END WRAPPER -->
 <!-- Javascript -->
-<script src="assets/vendor/jquery/jquery.min.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
 <script src="assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 <script src="assets/vendor/chartist/js/chartist.min.js"></script>
 <script src="assets/scripts/klorofil-common.js"></script>
 <script type="text/javascript" src="jquery.seat-charts.min.js"></script>
 <script type="text/javascript" src="public/js/xcConfirm.js"></script>
-<script type="text/javascript">var price = 100; //电影票价
+<script type="text/javascript">
+
+
+    var price = 100;
     $(document).ready(function() {
+
+        $.ajax({
+            url: "/api.php",
+            data: {classroom: 'all'},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                // var ata2 = data;
+                html = '';
+                for (var i=0;i<data.length;i++)
+                {
+                    html = html+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].valueTime+'</td><td><button type="button" class="btn btn-danger btn-toastr deletedClick" data-context="info" data-message="This is general theme info" data-position="top-right">删除</button></td></tr>';
+
+                    // document.write(cars[i] + "<br>");valueTime
+
+
+                }
+                $('#jiaoshiguanli').html(html);
+                // return ata2;
+                // alert('123');
+                // for i in data :
+                //
+                //     console.log(data[i]);
+                // data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+                // ...
+            }
+
+        });
+        $(document).on('click','.deletedClick',function(){
+            var sa = $(this).parent().parent().find("td").eq(1).html();
+            // console.log(sa);
+            $.ajax({
+                url: "/api.php",
+                data: {classroom: 'delete',id:sa},
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    if(data.name){
+                        alert('删除成功');
+                    } else{
+                        alert('删除失败');
+                    }
+
+                    // var ata2 = data;
+                    // html = '';
+                    // for (var i=0;i<data.length;i++)
+                    // {
+                    //     html = html+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].valueTime+'</td><td><button type="button" class="btn btn-danger btn-toastr deletedClick" data-context="info" data-message="This is general theme info" data-position="top-right">删除</button></td></tr>';
+                    //
+                    //     // document.write(cars[i] + "<br>");valueTime
+                    //
+                    //
+                    // }
+                    // $('#jiaoshiguanli').html(html);
+                    // return ata2;
+                    // alert('123');
+                    // for i in data :
+                    //
+                    //     console.log(data[i]);
+                    // data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+                    // ...
+                }
+
+            });
+            // $this.parent.parent.find('')
+            // alert(sa);
+        })
+
+
+
 
         var $cart = $('#seats_chose'),
             //座位区
@@ -262,12 +337,18 @@
         if(pai && lie) {
 
         }else{
-            sc.get(['1_3', '1_4', '4_4', '4_5', '4_6', '4_7', '4_8']).status('unavailable');
+            // sc.get(['1_3', '1_4', '4_4', '4_5', '4_6', '4_7', '4_8']).status('unavailable');
 
         }
 
     });
 
+
+    // $(document).ready(function(){
+    //     $('.deletedClick').click(function(){
+    //
+    //     })
+    // });
     function getTotalPrice(sc) { //计算票价总额
         var total = 0;
 
@@ -279,8 +360,10 @@
 
         return total;
 
-    }</script>
-<script>$(function() {
+    }
+</script>
+<script>
+    $(function() {
         var data, options;
 
         // headline charts
@@ -384,17 +467,7 @@
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-        $.ajax({
-            url: "/api.php",
-            data: {name: 'jenny'},
-            type: "get",
-            dataType: "json",
-            success: function(data) {
-                console.log(data);
-                // data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
-                // ...
-            }
-        });
+
     });
 
     </script>

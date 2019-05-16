@@ -37,9 +37,22 @@ $user->$action();
 //if(!empty($_GET['column']) && $_GET['column'] =='1'&){
 //
 //}
-$cm=new CourseModel();
-$classRom = new ClassRoomModel();
-$classRom->get_class_room_list();
+if(!empty($_GET['classroom'])){
+    if($_GET['classroom']=='delete' && !empty($_GET['id'])){
+        $cm=new CourseModel();
+        $classRom = new ClassRoomModel();
+        $res  = $classRom->delete_class_room($_GET['id']);
+        echo json_encode($res);
+    }
+    if($_GET['classroom']=='all'){
+        $cm=new CourseModel();
+        $classRom = new ClassRoomModel();
+        $res  = $classRom->get_class_room_list();
+        echo json_encode($res);
+    }
+
+}
+
 
 // $data=$cm->getRec();
 // echo json_encode($data);

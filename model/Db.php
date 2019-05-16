@@ -36,7 +36,7 @@
         //数据库连接
         public  function  connect(){
         	//配置连接数据,面向对象写法的连接
-        	$this->conn = new mysqli('localhost','root','root','test2');
+        	$this->conn = new mysqli('localhost','root','','test');
         	//设置编码
         	$this->conn->query("SET NAMES 'utf8'");    
         	if($this->conn->connect_error){
@@ -47,12 +47,9 @@
         
         //完成数据表的写操作:新增,更新,删除
         public function exec($sql){
-        	if($this->conn->query($sql)==true){
-        		echo '更改成功!';
-        	}else{
-        		echo "失败: " . $sql . "<br>" . $this->conn->error;		
-        		}
-        	}
+            return $this->conn->query($sql);
+
+        }
         	
         	//执行一条sql查询出单条数据
         	public function find($sql){
