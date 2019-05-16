@@ -50,6 +50,9 @@ if(!empty($_GET['type'])){
     }
 
 }
+if(!empty($_GET['classRoomName'])){
+    $res  = $classRom->index_maps($_GET['classRoomName']);
+}
 //class_room_name_list
 
 echo json_encode($res);

@@ -124,8 +124,15 @@
 
     var price = 100;
     $(document).ready(function() {
-        var column = getQueryString("column");
-        if(!column){
+        var column = getUrlParam("classRoomName");
+        console.log(column);
+        // if(column){
+
+        //     $('#classroomdetail').val(2);
+
+        // }
+
+
             $.ajax({
                 url: "/api.php",
                 data: {classroom: 'all'},
@@ -136,16 +143,27 @@
                     html = '';
                     for (var i=0;i<data.length;i++)
                     {
-                        html = html+'<option value="cheese">'+data[i].name+'</option>';
+                        html = html+'<option value="'+i+'">'+data[i].name+'</option>';
 
                         // document.write(cars[i] + "<br>");valueTime
 
                     }
                     $('#classroomdetail').html(html);
+                    document.getElementById("classroomdetail")[column].selected=true;
                 }
 
             });
-        }
+
+        $(document).on('change',"#classroomdetail",function(){
+            $classroomId = $('#classroomdetail').val();
+            window.location.href = "/?classRoomName="+$classroomId;
+        })
+        // $(document).ready(function () {
+            // $('#classroomdetail').val(column);
+
+            // $("#classroomdetail").val(column);
+            // $("#classroomdetail option[value="+column+"]").attr("selected", "selected");
+        // })
         $.ajax({
             url: "/api.php",
             data: {classroom: 'all'},
@@ -211,6 +229,29 @@
             //返回参数值
             return result ? decodeURIComponent(result[2]) : null;
         }
+        nameVlaue = $('#classroomdetail').val();
+        $.ajax({
+            url: "/api.php",
+            data: {classRoomName: nameVlaue},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+
+               var map =data;
+                // var ata2 = data;
+                html = '';
+                for (var i=0;i<data.length;i++)
+                {
+                    html = html+'<option value="'+i+'">'+data[i].name+'</option>';
+
+                    // document.write(cars[i] + "<br>");valueTime
+
+                }
+                $('#classroomdetail').html(html);
+                document.getElementById("classroomdetail")[column].selected=true;
+            }
+
+        });
         var map = [ //座位结构图 a 代表座位; 下划线 "_" 代表过道
             'cccccccccc',
 

@@ -44,4 +44,12 @@
             return $data;
 //			return $this->data = $stmt;
         }
+        public function index_maps($classRoomName){
+//		    var_dump("DELETE FROM class_room WHERE name = $id ");
+//		    die;
+            $stmt = $this->conn->exec("select name from class_room where name = '".$classRoomName."';");
+            $data['name'] = $stmt;
+            return $data;
+//			return $this->data = $stmt;
+        }
 	}
