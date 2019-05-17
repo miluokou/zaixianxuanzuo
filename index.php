@@ -149,7 +149,13 @@
 
                     }
                     $('#classroomdetail').html(html);
-                    document.getElementById("classroomdetail")[column].selected=true;
+                    if(column){
+
+                        // $('#classroomdetail').val(column);
+                        // alert('123');
+                        document.getElementById("classroomdetail")[column].selected=true;
+                    }
+
                 }
 
             });
@@ -230,28 +236,29 @@
             return result ? decodeURIComponent(result[2]) : null;
         }
         nameVlaue = $('#classroomdetail').val();
-        $.ajax({
-            url: "/api.php",
-            data: {classRoomName: nameVlaue},
-            type: "get",
-            dataType: "json",
-            success: function(data) {
+        // $.ajax({
+        //     url: "/api.php",
+        //     data: {classRoomName: nameVlaue},
+        //     type: "get",
+        //     dataType: "json",
+        //     success: function(data) {
 
-               var map =data;
-                // var ata2 = data;
-                html = '';
-                for (var i=0;i<data.length;i++)
-                {
-                    html = html+'<option value="'+i+'">'+data[i].name+'</option>';
+        //        var map =data;
+        //         // var ata2 = data;
+        //         html = '';
+        //         for (var i=0;i<data.length;i++)
+        //         {
+        //             html = html+'<option value="'+i+'">'+data[i].name+'</option>';
 
-                    // document.write(cars[i] + "<br>");valueTime
+        //             // document.write(cars[i] + "<br>");valueTime
 
-                }
-                $('#classroomdetail').html(html);
-                document.getElementById("classroomdetail")[column].selected=true;
-            }
+        //         }
+        //         $('#classroomdetail').html(html);
+        //         // document.getElementById("classroomdetail")[column].selected=true;
+        //     }
 
-        });
+        // });
+
         var map = [ //座位结构图 a 代表座位; 下划线 "_" 代表过道
             'cccccccccc',
 
