@@ -2,9 +2,9 @@
 	/**
 	 * 从Model类继承，可以使用父类方法或者增加自己的方法
 	 */
-	
+
 	class ClassRoomModel extends Model{
-		//登录功能函数 
+		//登录功能函数
 		public function get_class_room_list(){
 			$stmt = $this->conn->select("select id,name,start_at,end_at from class_room;");
 //			echo '<pre>';
@@ -48,6 +48,14 @@
 //		    var_dump("DELETE FROM class_room WHERE name = $id ");
 //		    die;
             $stmt = $this->conn->exec("select name from class_room where name = '".$classRoomName."';");
+            $data['name'] = $stmt;
+            return $data;
+//			return $this->data = $stmt;
+        }
+        public function indexSeatShow($classRoomName){
+//		    var_dump("select seat_formate from class_room where name = '".$classRoomName."';");
+//		    die;
+            $stmt = $this->conn->select("select seat_formate from class_room where name = '".$classRoomName."';");
             $data['name'] = $stmt;
             return $data;
 //			return $this->data = $stmt;

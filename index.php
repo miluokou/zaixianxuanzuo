@@ -85,6 +85,21 @@
                             <i class="lnr lnr-chart-bars"></i>
                             <span>人员管理</span></a>
                     </li>
+                    <li>
+                        <a href="/?column=3" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='3'){echo 'active';}?>">
+                            <i class="lnr lnr-chart-bars"></i>
+                            <span>预约信息</span></a>
+                    </li>
+                    <li>
+                        <a href="/?column=4" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='4'){echo 'active';}?>">
+                            <i class="lnr lnr-chart-bars"></i>
+                            <span>课表查询</span></a>
+                    </li>
+                    <li>
+                        <a href="/?column=5" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='5'){echo 'active';}?>">
+                            <i class="lnr lnr-chart-bars"></i>
+                            <span>公告</span></a>
+                    </li>
 
                 </ul>
             </nav>
@@ -102,7 +117,30 @@
         }else{
             require('page-classroom_control.php');
         }
-
+    }elseif(!empty($_GET['column']) && $_GET['column'] =='2'){
+        if($_GET['column'] =='1' && !empty($_GET['pai']) && !empty($_GET['lie'])){
+            require ('page-index.php');
+        }else{
+            require('page-student_control.php');
+        }
+    }elseif(!empty($_GET['column']) && $_GET['column'] =='3'){
+        if($_GET['column'] =='1' && !empty($_GET['pai']) && !empty($_GET['lie'])){
+            require ('page-index.php');
+        }else{
+            require('page-order_control.php');
+        }
+    }elseif(!empty($_GET['column']) && $_GET['column'] =='4'){
+        if($_GET['column'] =='1' && !empty($_GET['pai']) && !empty($_GET['lie'])){
+            require ('page-index.php');
+        }else{
+            require('page-course_control.php');
+        }
+    }elseif(!empty($_GET['column']) && $_GET['column'] =='5'){
+        if($_GET['column'] =='1' && !empty($_GET['pai']) && !empty($_GET['lie'])){
+            require ('page-index.php');
+        }else{
+            require('page-notice_control.php');
+        }
     }
 
     ?>
@@ -124,8 +162,17 @@
 
     var price = 100;
     $(document).ready(function() {
+        if(!window.localStorage){
+            alert("浏览器不支持localstorage");
+            return false;
+        }
         var column = getUrlParam("classRoomName");
-        console.log(column);
+        if(!column){
+            column = 0;
+        }else{
+            column = parseInt(column);
+        }
+        // console.log(column);
         // if(column){
 
         //     $('#classroomdetail').val(2);
@@ -133,41 +180,84 @@
         // }
 
 
+
+// console.log('--classroomlist--');
+// console.log();
+        $(document).on('change',"#classroomdetail",function(){
+            $classroomId = $('#classroomdetail').val();
+            console.log($classroomId);
+            console.log("_____");
             $.ajax({
                 url: "/api.php",
                 data: {classroom: 'all'},
                 type: "get",
                 dataType: "json",
                 success: function(data) {
+                    // window.localStorage.classroomlist = data;
                     // var ata2 = data;
                     html = '';
                     for (var i=0;i<data.length;i++)
                     {
                         html = html+'<option value="'+i+'">'+data[i].name+'</option>';
-
-                        // document.write(cars[i] + "<br>");valueTime
+                        window.localStorage.classroomlist[i] = data[i].name;
 
                     }
+                    window.localStorage.removeItem('danqianClassRoomName');
+                    window.localStorage.danqianClassRoomName = data;
+
+                    // window.localStorage.danqianClassRoomName[column].name
                     $('#classroomdetail').html(html);
-                    if(column){
 
-                        // $('#classroomdetail').val(column);
-                        // alert('123');
-                        document.getElementById("classroomdetail")[column].selected=true;
-                    }
+
+                        column = getUrlParam("classRoomName");
+                        if(!$classroomId){
+                            $classroomId = 0;
+                        }else{
+                            $classroomId = parseInt($classroomId);
+                        }
+                        document.getElementById("classroomdetail")[$classroomId].selected=true;
+
 
                 }
 
             });
-
-        $(document).on('change',"#classroomdetail",function(){
-            $classroomId = $('#classroomdetail').val();
             window.location.href = "/?classRoomName="+$classroomId;
-        })
-        // $(document).ready(function () {
+            // window.location.reload();
+        });// $(document).ready(function () {
             // $('#classroomdetail').val(column);
+        $.ajax({
+            url: "/api.php",
+            data: {classroom: 'all'},
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                // window.localStorage.classroomlist = data;
+                // var ata2 = data;
+                html = '';
+                for (var i=0;i<data.length;i++)
+                {
+                    html = html+'<option value="'+i+'">'+data[i].name+'</option>';
+                    window.localStorage.classroomlist[i] = data[i].name;
 
-            // $("#classroomdetail").val(column);
+                }
+                window.localStorage.removeItem('danqianClassRoomName');
+                window.localStorage.danqianClassRoomName = data[$classroomId].name;
+                // window.localStorage.danqianClassRoomName[column].name
+                $('#classroomdetail').html(html);
+                if(column){
+
+                    // $('#classroomdetail').val(column);
+                    // alert('123');
+                    document.getElementById("classroomdetail")[column].selected=true;
+                }
+
+            }
+
+        });
+        // document.getElementById("classroomdetail")[column].selected=true;
+
+
+        // $("#classroomdetail").val(column);
             // $("#classroomdetail option[value="+column+"]").attr("selected", "selected");
         // })
         $.ajax({
@@ -281,6 +371,33 @@
             'cc__cc__cc'
 
         ];
+        console.log(window.localStorage.danqianClassRoomName);
+        $.ajax({
+            url: "/api.php",
+            data: {
+                classroomName2: window.localStorage.danqianClassRoomName,
+                index:'index',
+            },
+            type: "get",
+            dataType: "json",
+            success: function(data) {
+                console.log(window.localStorage.danqianClassRoomName);
+                window.localStorage.indexseat = data;
+                // if(data.name){
+                //
+                //     sc.get(zuoweilist).status('unavailable');
+                //     window.location.href = "/";
+                // } else{
+                //     alert('失败');
+                // }
+            }
+
+        });
+        // console.log('')
+        map = eval(window.localStorage.indexseat);
+        console.log(map);
+        //
+        // console.log(map2);
         var item = [
 
             ['c', 'available', '可选座'],
@@ -348,12 +465,7 @@
 
                 });
 
-
-
-
                 // console.log(sc.get(zuoweilist));
-
-                // alert('123');
             });
         }
 

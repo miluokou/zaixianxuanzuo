@@ -42,7 +42,7 @@ if(!empty($_GET['type'])){
         foreach ($cccFormate as $kk=>$split){
             $cccFormate2[] = implode('',$split);
         }
-        $seat_formate = serialize($cccFormate2);
+        $seat_formate = json_encode($cccFormate2);
 //        str_repeat
 
         $res  = $classRom->room_diff($_GET,$seat_formate);
@@ -50,10 +50,18 @@ if(!empty($_GET['type'])){
     }
 
 }
+
 if(!empty($_GET['classRoomName'])){
-    $res  = $classRom->index_maps($_GET['classRoomName']);
+    $res  = $classRom->room_diff($_GET,$seat_formate);
 }
-//class_room_name_list
+
+if(isset($_GET['classroomName2']) && isset($_GET['index'])){
+    $res2  = $classRom->indexSeatShow($_GET['classroomName2']);
+
+    $res= $res2['name'][0]['seat_formate'];
+//    $res = explode(',');
+//    var_dump($res2);die;
+}
 
 echo json_encode($res);
 
