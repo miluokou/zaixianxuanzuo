@@ -7,10 +7,15 @@ error_reporting(E_ALL | E_STRICT);
 require "model/Db.php";
 require "model/Model.php";
 require "model/CourseModel.php";
+require "model/UserModel.php";
 require "controller/UserController.php";
 require 'model/ClassRoomModel.php';
 $cm=new CourseModel();
 $classRom = new ClassRoomModel();
+//$userModel = new UserModel();
+
+
+
 
 if(!empty($_GET['classroom'])){
     if($_GET['classroom']=='delete' && !empty($_GET['id'])){
@@ -22,7 +27,6 @@ if(!empty($_GET['classroom'])){
     }
 
 }
-
 if(!empty($_GET['type'])){
     if($_GET['type']=='list'){
         $res  = $classRom->class_room_name_list();
@@ -55,23 +59,7 @@ if(!empty($_GET['type'])){
 
     }
     if($_GET['type']=='leisidiff' && !empty($_GET['pai'])&& !empty($_GET['lie'])&& !empty($_GET['start_at'])&& !empty($_GET['end_at'])&& !empty($_GET['diffList'])){
-//        var_dump('123');die;
-//        zuoweilist
-//        $ccc = str_repeat('c',$_GET['pai']);
-//        for($i=1;$i<=$_GET['lie'];$i++){
-//            $cccFormate[$i] = str_split($ccc);
-//        }
-//        foreach($_GET['diffList'] as $diffv){
-//            $ssss = explode('_',$diffv);
-//            $cccFormate[$ssss[0]-1][$ssss[1]-1]='_';
-//
-//        }
-//        foreach ($cccFormate as $kk=>$split){
-//            $cccFormate2[] = implode('',$split);
-//        }
         $seat_formate = json_encode($_GET['diffList']);
-//        str_repeat
-//        var_dump($seat_formate);
         $res  = $classRom->room_leisidiff($_GET,$seat_formate);
 
     }
@@ -79,8 +67,11 @@ if(!empty($_GET['type'])){
         $res  = $classRom->get_ordered($_GET['classroomName']);
     }
 
-}
+    if($_GET['type']=='login' && !empty($_GET['user']) && !empty($_GET['pass'])){
+        $res  = $classRom->login($_GET);
+    }
 
+}
 if(!empty($_GET['classRoomName'])){
     $res  = $classRom->room_diff($_GET,$seat_formate);
 }

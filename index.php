@@ -51,10 +51,10 @@
                             <i class="icon-submenu lnr lnr-chevron-down"></i>
                         </a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">
+                            <li >
+                                <a href="javascript:void(0);">
                                     <i class="lnr lnr-exit"></i>
-                                    <span>Logout</span></a>
+                                    <span id="loggin">Logout</span></a>
                             </li>
                         </ul>
                     </li>
@@ -166,10 +166,14 @@
             alert("浏览器不支持localstorage");
             return false;
         }
-        if(!window.localStorage.login){
+        if(!window.localStorage.loginstatus){
             window.location.href = "/page-login.html";
         }
 
+        $('#loggin').click(function(){
+            window.localStorage.removeItem('loginstatus');
+            window.location.reload();
+        })
 
         var column = getUrlParam("classRoomName2");
         var TrueColumn = getUrlParam("column");
@@ -195,6 +199,7 @@
 
             });
         }
+
         if(!column){
             column = 0;
         }else{
@@ -679,7 +684,14 @@
 
             });
         }
-
+        if(window.localStorage.loginstatus ==1){
+            $('#sidebar-nav ul.nav li:eq(1)').css('display',"none");
+            $('#sidebar-nav ul.nav li:eq(2)').css('display',"none");
+            $('#sidebar-nav ul.nav li:eq(3)').css('display',"none");
+            $('#sidebar-nav ul.nav li:eq(4)').css('display',"none");
+            // $('#sidebar-nav ul.nav li:eq(5)').css('display',"none");
+            // alert('123');
+        }
     });
 
 
@@ -806,7 +818,6 @@
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-
 
 
     });

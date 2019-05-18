@@ -72,30 +72,39 @@
 </body>
 <script>
 	$(document).on('click','#loginpass',function(){
+		window.localStorage.removeItem("loginstatus");
 		var  user= $('#signin-email').val();
 		var pass = $('#signin-password').val();
-		alert(user);
-		$.ajax({
-			url: "/api.php",
-			data: {login: 'order',user:'user',pass:pass},
-			type: "get",
-			dataType: "json",
-			success: function(data) {
-				// var ata2 = data;
-				html = '';
-				for (var i=0;i<data.length;i++)
-				{
-					html = html+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].valueTime+'</td><td><button type="button" class="btn btn-danger btn-toastr deletedClick" data-context="info" data-message="This is general theme info" data-position="top-right">删除</button></td></tr>';
-
-					// document.write(cars[i] + "<br>");valueTime
-
-
-				}
-				$('#jiaoshiguanli2').html(html);
-				window.location.href = "/page-login.html";
-			}
-
-		});
+		if(user == 'student' && pass == '123'){
+			window.localStorage.loginstatus = 1;
+			window.location.href = "/";
+		}
+		if(user == 'teacher' && pass == '123'){
+			window.localStorage.loginstatus = 2;
+			window.location.href = "/";
+		}
+		// $.ajax({
+		// 	url: "/api.php",
+		// 	data: {type: 'login',user:user,pass:pass},
+		// 	type: "get",
+		// 	dataType: "json",
+		// 	success: function(data) {
+		// 		alert(data);
+		// 		// var ata2 = data;
+		// 		// html = '';
+		// 		// for (var i=0;i<data.length;i++)
+		// 		// {
+		// 		// 	html = html+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].valueTime+'</td><td><button type="button" class="btn btn-danger btn-toastr deletedClick" data-context="info" data-message="This is general theme info" data-position="top-right">删除</button></td></tr>';
+		// 		//
+		// 		// 	// document.write(cars[i] + "<br>");valueTime
+		// 		//
+		// 		//
+		// 		// }
+		// 		// $('#jiaoshiguanli2').html(html);
+		// 		// window.location.href = "/page-login.html";
+		// 	}
+		//
+		// });
 
 	})
 </script>

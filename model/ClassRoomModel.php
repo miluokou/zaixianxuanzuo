@@ -73,6 +73,8 @@
             return $data;
 //			return $this->data = $stmt;
         }
+
+
         public function index_maps($classRoomName){
 //		    var_dump("DELETE FROM class_room WHERE name = $id ");
 //		    die;
@@ -86,6 +88,14 @@
 //		    die;
             $stmt = $this->conn->select("select seat_formate from class_room where name = '".$classRoomName."';");
 
+            $data['name'] = $stmt;
+            return $data;
+//			return $this->data = $stmt; login
+        }
+        public function login($get){
+//		    var_dump("DELETE FROM class_room WHERE name = $id ");
+//		    die;
+            $stmt = $this->conn->exec("select * from user");
             $data['name'] = $stmt;
             return $data;
 //			return $this->data = $stmt;
