@@ -36,17 +36,47 @@ if(!empty($_GET['type'])){
         }
         foreach($_GET['diffList'] as $diffv){
             $ssss = explode('_',$diffv);
+
             $cccFormate[$ssss[0]-1][$ssss[1]-1]='_';
 
         }
         foreach ($cccFormate as $kk=>$split){
-            $cccFormate2[] = implode('',$split);
+
+                $rowKey = implode('',$split);
+                if(strlen($rowKey)>1){
+                    $cccFormate2[] =$rowKey;
+                }
+
         }
         $seat_formate = json_encode($cccFormate2);
 //        str_repeat
 
         $res  = $classRom->room_diff($_GET,$seat_formate);
 
+    }
+    if($_GET['type']=='leisidiff' && !empty($_GET['pai'])&& !empty($_GET['lie'])&& !empty($_GET['start_at'])&& !empty($_GET['end_at'])&& !empty($_GET['diffList'])){
+//        var_dump('123');die;
+//        zuoweilist
+//        $ccc = str_repeat('c',$_GET['pai']);
+//        for($i=1;$i<=$_GET['lie'];$i++){
+//            $cccFormate[$i] = str_split($ccc);
+//        }
+//        foreach($_GET['diffList'] as $diffv){
+//            $ssss = explode('_',$diffv);
+//            $cccFormate[$ssss[0]-1][$ssss[1]-1]='_';
+//
+//        }
+//        foreach ($cccFormate as $kk=>$split){
+//            $cccFormate2[] = implode('',$split);
+//        }
+        $seat_formate = json_encode($_GET['diffList']);
+//        str_repeat
+//        var_dump($seat_formate);
+        $res  = $classRom->room_leisidiff($_GET,$seat_formate);
+
+    }
+    if($_GET['type']=='getOrdered' && !empty($_GET['classroomName'])){
+        $res  = $classRom->get_ordered($_GET['classroomName']);
     }
 
 }
@@ -59,8 +89,14 @@ if(isset($_GET['classroomName2']) && isset($_GET['index'])){
     $res2  = $classRom->indexSeatShow($_GET['classroomName2']);
 
     $res= $res2['name'][0]['seat_formate'];
-//    $res = explode(',');
-//    var_dump($res2);die;
+//    $res222 = explode(',',$res);
+//    foreach ($res222 as $kk56  => $vv56){
+//        if(strlen($vv56)<=1){
+//            unset($res222[$kk56]);
+//        }
+//    }
+//    $finalres = implode(',');
+//    var_dump($res222);die;
 }
 
 echo json_encode($res);
