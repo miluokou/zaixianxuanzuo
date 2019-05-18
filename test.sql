@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : qweqw
+ Source Server         : 123123
  Source Server Type    : MySQL
  Source Server Version : 100139
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 100139
  File Encoding         : 65001
 
- Date: 17/05/2019 02:03:45
+ Date: 18/05/2019 15:49:42
 */
 
 SET NAMES utf8mb4;
@@ -28,17 +28,21 @@ CREATE TABLE `class_room`  (
   `start_at` datetime(6) NULL DEFAULT NULL,
   `end_at` datetime(6) NULL DEFAULT NULL,
   `deleted_at` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `order_arr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `name`(`name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of class_room
 -- ----------------------------
-INSERT INTO `class_room` VALUES (2, '0003', '{\'cccccccccc\',\'cccccccccc\',\'__________\',\'cccccccc__\',\'cccccccccc\',\'cccccccccc\',\'cccccccccc\',\'cccccccccc\',\'cccccccccc\',\'cc__cc__cc\'}', NULL, NULL, NULL);
-INSERT INTO `class_room` VALUES (4, '1123', 'a:12:{i:0;s:12:\"cccccccccccc\";i:1;s:12:\"cccccccccccc\";i:2;s:12:\"cccc_ccccccc\";i:3;s:12:\"cccc_ccccccc\";i:4;s:12:\"cccc_ccccccc\";i:5;s:12:\"cccccccccccc\";i:6;s:12:\"cccccccccccc\";i:7;s:12:\"cccccccccccc\";i:8;s:12:\"cccccccccccc\";i:9;s:12:\"cccccccccccc\";i:10;s:12', NULL, NULL, NULL);
-INSERT INTO `class_room` VALUES (5, '112343', 'a:12:{i:0;s:12:\"cccccccccccc\";i:1;s:12:\"cccccccccccc\";i:2;s:12:\"cccc_ccccccc\";i:3;s:12:\"cccc_ccccccc\";i:4;s:12:\"cccc_ccccccc\";i:5;s:12:\"cccccccccccc\";i:6;s:12:\"cccccccccccc\";i:7;s:12:\"cccccccccccc\";i:8;s:12:\"cccccccccccc\";i:9;s:12:\"cccccccccccc\";i:10;s:12', '2018-01-01 04:00:00.000000', '2018-01-01 04:00:00.000000', NULL);
-INSERT INTO `class_room` VALUES (41, '寂寞的教室', 'a:3:{i:0;s:1:\"c\";i:1;s:1:\"c\";i:2;s:1:\"_\";}', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL);
+INSERT INTO `class_room` VALUES (42, '2312', '[\"cccccccccccc\",\"cccccccccccc\",\"cccccccccccc\",\"cccccccccccc\",\"ccccccccc_cc\",\"ccccccccc_cc\",\"cccccccccccc\",\"cccccccccccc\",\"cccccccccccc\",\"cccccccccccc\",\"cccccccccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, '[\"9_12\",\"10_12\",\"11_12\",\"8_12\"]');
+INSERT INTO `class_room` VALUES (43, '22', '[\"ccccccccccc\",\"ccccccccccc\",\"ccccccccccc\",\"ccccccccccc\",\"ccccccccccc\",\"cccccc__ccc\",\"cccccc_cccc\",\"ccccccccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, NULL);
+INSERT INTO `class_room` VALUES (44, '中文名字', '[\"cccccccc\",\"ccccccc_\",\"cccc____\",\"ccc___cc\",\"cccccccc\",\"cccccccc\",\"cccccccc\",\"cccccccc\",\"cccccccc\",\"cccccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, NULL);
+INSERT INTO `class_room` VALUES (46, '新建一个教室', '[\"cccccccc\",\"cccccccc\",\"_____ccc\",\"cccc_ccc\",\"cccc_ccc\",\"cccc_ccc\",\"cccc_ccc\",\"cccccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, NULL);
+INSERT INTO `class_room` VALUES (47, '222', '[\"ccccc\",\"ccccc\",\"cccc_\",\"ccc__\",\"ccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, NULL);
+INSERT INTO `class_room` VALUES (56, '3434', '[\"ccccc\",\"ccccc\",\"cccc_\",\"ccc__\",\"ccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, NULL);
+INSERT INTO `class_room` VALUES (59, 'dfsdfs', '[\"ccccc\",\"ccccc\",\"cccc_\",\"ccc__\",\"ccccc\"]', '2018-01-01 04:00:00.000000', '2018-03-01 04:00:00.000000', NULL, '[\"5_5\",\"5_4\"]');
 
 -- ----------------------------
 -- Table structure for seat
