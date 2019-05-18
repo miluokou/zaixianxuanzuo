@@ -12,15 +12,16 @@
                         <th>#</th>
                         <th>教室名字</th>
                         <th>可用时间段</th>
+                        <th>预定人</th>
                         <th>
-                                                        <button type="button" class="btn btn-success btn6" data-context="info" data-message="This is general theme info" data-position="top-right" data-toggle="modal" data-target="#exampleModal" >新增教室</button>
+<!--                         <button type="button" class="btn btn-success btn6" data-context="info" data-message="This is general theme info" data-position="top-right" data-toggle="modal" data-target="#exampleModal" >新增教室</button>-->
 
                         </th>
 <!--                        <th>-->
 <!--                        </th>-->
                     </tr>
                     </thead>
-                    <tbody id ="jiaoshiguanli">
+                    <tbody id ="jiaoshiguanli2">
 
                     <tr>
                         <td>2</td>
@@ -28,8 +29,8 @@
                         <td>Philips</td>
                         <td>@simon</td>
                         <td>
-<!--                            <button>123</button>-->
-                            <button type="button" class="btn btn-primary btn-toastr" data-context="info" data-message="This is general theme info" data-position="top-right">General Info</button>
+<!--                            删除-->
+<!--                            <button type="button" class="btn btn-primary btn-toastr" data-context="info" data-message="This is general theme info" data-position="top-right">General Info</button>-->
                         </td>
                     </tr>
                     <tr>

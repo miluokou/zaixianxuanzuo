@@ -93,7 +93,7 @@
                     <li>
                         <a href="/?column=4" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='4'){echo 'active';}?>">
                             <i class="lnr lnr-chart-bars"></i>
-                            <span>课表查询</span></a>
+                            <span>课表信息</span></a>
                     </li>
                     <li>
                         <a href="/?column=5" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='5'){echo 'active';}?>">
@@ -166,13 +166,41 @@
             alert("浏览器不支持localstorage");
             return false;
         }
-        var column = getUrlParam("classRoomName");
+        if(!window.localStorage.login){
+            window.location.href = "/page-login.html";
+        }
+
+
+        var column = getUrlParam("classRoomName2");
+        var TrueColumn = getUrlParam("column");
+        if(TrueColumn =='3'){
+            $.ajax({
+                url: "/api.php",
+                data: {type: 'order'},
+                type: "get",
+                dataType: "json",
+                success: function(data) {
+                    // var ata2 = data;
+                    html = '';
+                    for (var i=0;i<data.length;i++)
+                    {
+                        html = html+'<tr><td>'+data[i].id+'</td><td>'+data[i].name+'</td><td>'+data[i].valueTime+'</td><td><button type="button" class="btn btn-danger btn-toastr deletedClick" data-context="info" data-message="This is general theme info" data-position="top-right">删除</button></td></tr>';
+
+                        // document.write(cars[i] + "<br>");valueTime
+
+
+                    }
+                    $('#jiaoshiguanli2').html(html);
+                }
+
+            });
+        }
         if(!column){
             column = 0;
         }else{
             column = parseInt(column);
         }
-        console.log(column);
+        console.log(TrueColumn);
         // if(column){
 
         //     $('#classroomdetail').val(2);
@@ -540,43 +568,7 @@
                 // console.log(sc.get(zuoweilist));
             });
 
-            $.ajax({
-                url: "/api.php",
-                data: {type: 'getOrdered',classroomName:window.localStorage.danqianClassRoomName},
-                type: "get",
-                async: false,
-                dataType: "json",
-                success: function(data) {
-                    console.log('getOrdered');
-                    // window.localStorage.classroomlist = data;
-                    // var ata2 = data;
-                    // html = '';
-                    // console.log(data);
-                    // for (var i=0;i<data.length;i++)
-                    // {
-                    //     html = html+'<option value="'+i+'">'+data[i].name+'</option>';
-                    //     // window.localStorage.classroomlist[i] = data[i].name;
-                    //
-                    // }
-                    // window.localStorage.removeItem('danqianClassRoomName');
-                    // window.localStorage.danqianClassRoomName = data[$classroomId].name;
-                    //
-                    // // window.localStorage.danqianClassRoomName[column].name
-                    // $('#classroomdetail').html(html);
-                    //
-                    //
-                    // // column = getUrlParam("classRoomName");
-                    // if(!$classroomId){
-                    //     $classroomId = 0;
-                    // }else{
-                    //     $classroomId = parseInt($classroomId);
-                    // }
-                    // document.getElementById("classroomdetail")[$classroomId].selected=true;
-                    sc.get(['1_3', '1_4', '4_4', '4_5', '4_6', '4_7', '4_8']).status('unavailable');
 
-                }
-
-            });
 
         }
         console.log(map);
@@ -644,6 +636,48 @@
         }else{
             // sc.get(['1_3', '1_4', '4_4', '4_5', '4_6', '4_7', '4_8']).status('unavailable');
 
+        }
+        if(classRoomNameRes){
+            $.ajax({
+                url: "/api.php",
+                data: {type: 'getOrdered',classroomName:window.localStorage.danqianClassRoomName},
+                type: "get",
+                async: false,
+                dataType: "json",
+                success: function(data) {
+                    data2 = eval(data);
+                    console.log(data2);
+                    console.log(['1_3', '1_4', '4_4', '4_5', '4_6', '4_7', '4_8']);
+                    // console.log('getOrdered');
+                    // window.localStorage.classroomlist = data;
+                    // var ata2 = data;
+                    // html = '';
+                    // console.log(data);
+                    // for (var i=0;i<data.length;i++)
+                    // {
+                    //     html = html+'<option value="'+i+'">'+data[i].name+'</option>';
+                    //     // window.localStorage.classroomlist[i] = data[i].name;
+                    //
+                    // }
+                    // window.localStorage.removeItem('danqianClassRoomName');
+                    // window.localStorage.danqianClassRoomName = data[$classroomId].name;
+                    //
+                    // // window.localStorage.danqianClassRoomName[column].name
+                    // $('#classroomdetail').html(html);
+                    //
+                    //
+                    // // column = getUrlParam("classRoomName");
+                    // if(!$classroomId){
+                    //     $classroomId = 0;
+                    // }else{
+                    //     $classroomId = parseInt($classroomId);
+                    // }
+                    // document.getElementById("classroomdetail")[$classroomId].selected=true;
+                    sc.get(data2).status('unavailable');
+
+                }
+
+            });
         }
 
     });
@@ -772,6 +806,8 @@
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
+
+
 
     });
 

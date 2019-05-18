@@ -37,7 +37,7 @@ if(!empty($_GET['type'])){
         foreach($_GET['diffList'] as $diffv){
             $ssss = explode('_',$diffv);
 
-            $cccFormate[$ssss[0]-1][$ssss[1]-1]='_';
+            $cccFormate[$ssss[0]][$ssss[1]-1]='_';
 
         }
         foreach ($cccFormate as $kk=>$split){
