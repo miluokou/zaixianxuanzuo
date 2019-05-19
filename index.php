@@ -80,16 +80,16 @@
                             <i class="lnr lnr-code"></i>
                             <span>教室管理</span></a>
                     </li>
-                    <li>
-                        <a href="/?column=2" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='2'){echo 'active';}?>">
-                            <i class="lnr lnr-chart-bars"></i>
-                            <span>人员管理</span></a>
-                    </li>
-                    <li>
-                        <a href="/?column=3" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='3'){echo 'active';}?>">
-                            <i class="lnr lnr-chart-bars"></i>
-                            <span>预约信息</span></a>
-                    </li>
+<!--                    <li>-->
+<!--                        <a href="/?column=2" class="--><?php //if(!empty($_GET['column']) && $_GET['column'] =='2'){echo 'active';}?><!--">-->
+<!--                            <i class="lnr lnr-chart-bars"></i>-->
+<!--                            <span>人员管理</span></a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a href="/?column=3" class="--><?php //if(!empty($_GET['column']) && $_GET['column'] =='3'){echo 'active';}?><!--">-->
+<!--                            <i class="lnr lnr-chart-bars"></i>-->
+<!--                            <span>预约信息</span></a>-->
+<!--                    </li>-->
                     <li>
                         <a href="/?column=4" class="<?php if(!empty($_GET['column']) && $_GET['column'] =='4'){echo 'active';}?>">
                             <i class="lnr lnr-chart-bars"></i>
@@ -175,7 +175,7 @@
             window.location.reload();
         })
 
-        var column = getUrlParam("classRoomName2");
+        var column = getUrlParam("classRoomName");
         var TrueColumn = getUrlParam("column");
         if(TrueColumn =='3'){
             $.ajax({
@@ -249,8 +249,9 @@
         $(document).on('change',"#classroomdetail",function(){
             console.log('--classroomlist change function nei--');
             $classroomId = $('#classroomdetail').val();
+            console.log("_$classroomId____");
             console.log($classroomId);
-            console.log("_____");
+
             $.ajax({
                 url: "/api.php",
                 data: {classroom: 'all'},
@@ -509,7 +510,11 @@
                 // console.log(sc.get(zuoweilist));
             });
         }
+        console.log(classRoomNameRes);
+        console.log('上面的值是0的时候怎么处理');
         if(classRoomNameRes){
+            console.log('上面的值是0的时候怎么处理111');
+            //学生预定
             $(document).on('click','#querenxuanzuo',function(){
                 // var ids = $('#seats_chose li').attr('id');
                 // console.log(ids);
@@ -609,20 +614,20 @@
 
                         .appendTo($cart);
 
-                    $tickects_num.text(sc.find('selected').length + 1); //统计选票数量
-                    $total_price.text(getTotalPrice(sc) + price); //计算票价总金额
+                    $tickects_num.text(sc.find('selected').length + 1);
+                    $total_price.text(getTotalPrice(sc) + price);
 
                     return 'selected';
 
-                } else if (this.status() == 'selected') { //若为选中状态
+                } else if (this.status() == 'selected') {
 
-                    $tickects_num.text(sc.find('selected').length - 1); //更新票数量
-                    $total_price.text(getTotalPrice(sc) - price); //更新票价总金额
-                    $('#cart-item-' + this.settings.id).remove(); //删除已预订座位
+                    $tickects_num.text(sc.find('selected').length - 1);
+                    $total_price.text(getTotalPrice(sc) - price);
+                    $('#cart-item-' + this.settings.id).remove();
 
                     return 'available';
 
-                } else if (this.status() == 'unavailable') { //若为已售出状态
+                } else if (this.status() == 'unavailable') {
                     return 'unavailable';
 
                 } else {
@@ -642,6 +647,7 @@
             // sc.get(['1_3', '1_4', '4_4', '4_5', '4_6', '4_7', '4_8']).status('unavailable');
 
         }
+        //已经预订了的座位不允许继续预定
         if(classRoomNameRes){
             $.ajax({
                 url: "/api.php",

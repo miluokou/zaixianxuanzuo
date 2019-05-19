@@ -77,11 +77,11 @@
 		var pass = $('#signin-password').val();
 		if(user == 'student' && pass == '123'){
 			window.localStorage.loginstatus = 1;
-			window.location.href = "/";
+			window.location.href = "/?classRoomName=0";
 		}
 		if(user == 'teacher' && pass == '123'){
 			window.localStorage.loginstatus = 2;
-			window.location.href = "/";
+			window.location.href = "/?classRoomName=0";
 		}
 		// $.ajax({
 		// 	url: "/api.php",
