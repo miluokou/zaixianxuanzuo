@@ -13,7 +13,7 @@
                         <th>教室名字</th>
                         <th>可用时间段</th>
                         <th>
-                                                        <button type="button" class="btn btn-success btn6" data-context="info" data-message="This is general theme info" data-position="top-right" data-toggle="modal" data-target="#exampleModal" >新增教室</button>
+                            <button type="button" class="btn btn-success btn6" data-context="info" data-message="This is general theme info" data-position="top-right" data-toggle="modal" data-target="#exampleModal" >新增教室</button>
 
                         </th>
 <!--                        <th>-->
@@ -28,7 +28,6 @@
                         <td>Philips</td>
                         <td>@simon</td>
                         <td>
-<!--                            <button>123</button>-->
                             <button type="button" class="btn btn-primary btn-toastr" data-context="info" data-message="This is general theme info" data-position="top-right">General Info</button>
                         </td>
                     </tr>
@@ -50,12 +49,20 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="exampleModalLabel">填入信息</h4>
             </div>
             <form action = '/' method="get">
             <div class="modal-body">
-
+                    <div class="form-group c-datepicker-date-editor J-datepicker-range mt10">
+                        <label for="recipient-name" class="control-label">可用时间:</label>
+                        <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
+                        <input placeholder="开始日期" name="start_at" class="c-datepicker-data-input" value="2018-01-01 04:00:00">
+                        <span class="c-datepicker-range-separator">-</span>
+                        <input placeholder="结束日期" name="end_at" class="c-datepicker-data-input" value="2018-03-01 04:00:00">
+                    </div>
                     <div class="form-group">
                         <label for="recipient-name" class="control-label">教室名字:</label>
                         <input type="text" class="form-control" id="recipient-name" name = 'classroomName'>
@@ -68,18 +75,8 @@
                         <label for="recipient-name" class="control-label">一共几列:</label>
                         <input type="text" class="form-control" id="recipient-name" name = 'lie'>
                     </div>
-                    <div class="form-group c-datepicker-date-editor J-datepicker-range mt10">
-                        <label for="recipient-name" class="control-label">可用时间:</label>
-                        <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
-                        <input placeholder="开始日期" name="start_at" class="c-datepicker-data-input" value="2018-01-01 04:00:00">
-                        <span class="c-datepicker-range-separator">-</span>
-                        <input placeholder="结束日期" name="end_at" class="c-datepicker-data-input" value="2018-03-01 04:00:00">
-                    </div>
+
                     <input type="hidden" name = 'column' value ='1' >
-<!--                    <div class="form-group">-->
-<!--                        <label for="message-text" class="control-label">Message:</label>-->
-<!--                        <textarea class="form-control" id="message-text"></textarea>-->
-<!--                    </div>-->
 
             </div>
             <div class="modal-footer">
@@ -138,8 +135,8 @@
         //时分秒年月日单个
         $('.J-datepicker-en').datePicker({
             hasShortcut: true,
-            min: '2018-01-01 04:00:00',
-            max: '2019-04-29 20:59:59',
+            min: '2019-05-01 04:00:00',
+            max: '2019-06-29 20:59:59',
             language: 'en',
             shortcutOptions: [{
                 name: 'today',
@@ -237,8 +234,8 @@
         //时分秒年月日单个
         $('.J-datepicker').datePicker({
             hasShortcut:true,
-            min:'2018-01-01 04:00:00',
-            max:'2019-04-29 20:59:59',
+            min:'2019-05-01 04:00:00',
+            max:'2019-06-29 20:59:59',
             shortcutOptions:[{
                 name: '今天',
                 day: '0'
@@ -293,8 +290,8 @@
         //时分秒年月日范围，包含最大最小值
         $('.J-datepicker-range').datePicker({
             hasShortcut: true,
-            min: '2018-01-01 06:00:00',
-            max: '2019-04-29 20:59:59',
+            min: '2019-05-21 06:00:00',
+            max: '2019-06-29 20:59:59',
             isRange: true,
             shortcutOptions: [{
                 name: '昨天',
@@ -335,8 +332,8 @@
         //年月单个
         $('.J-yearMonthPicker-single').datePicker({
             format: 'YYYY-MM',
-            min: '2018-01',
-            max: '2019-04',
+            min: '2019-05',
+            max: '2020-04',
             hide: function (type) {
                 console.info(this.$input.eq(0).val());
             }
@@ -345,7 +342,7 @@
         //选择年
         $('.J-yearPicker-single').datePicker({
             format: 'YYYY',
-            min: '2018',
+            min: '2019',
             max: '2020'
         });
 

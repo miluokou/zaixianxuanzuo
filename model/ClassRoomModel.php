@@ -12,7 +12,7 @@
             foreach ($stmt as $key =>$values){
                 $res[$key]['id']= $key +1;
                 $res[$key]['name']= $values['name'];
-                $res[$key]['valueTime']= $this->dateFormate($values['start_at']).'~'.$this->dateFormate($values['start_at']);
+                $res[$key]['valueTime']= $this->dateFormate($values['start_at']).'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~~~&nbsp;&nbsp;<br>'.$this->dateFormate($values['end_at']);
             }
             return $res;
     //			return $this->data = $stmt;

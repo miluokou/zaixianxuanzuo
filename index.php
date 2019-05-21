@@ -227,14 +227,17 @@
 
                 }
                 window.localStorage.removeItem('danqianClassRoomName');
+                window.localStorage.removeItem('spantime');
                 window.localStorage.danqianClassRoomName = data[column].name;
+                window.localStorage.spantime = data[column].valueTime;
+                console.log(window.localStorage.spantime);
                 // window.localStorage.danqianClassRoomName[column].name
+                console.log('数值shijian');
+                console.log(window.localStorage.spantime);
                 $('#classroomdetail').html(html);
-                if(column){
-
-                    // $('#classroomdetail').val(column);
-                    // alert('123');
+                if(column || column=='0'){
                     document.getElementById("classroomdetail")[column].selected=true;
+                    $("#keyongshijian").html(window.localStorage.spantime);
                 }
 
             }

@@ -28,16 +28,9 @@
 
                                 ?>
                                 </span></p>
-                        <p>当前时间：
-                            <span>
-                                <div class="form-group c-datepicker-date-editor J-datepicker-range mt10" style="margin-left:-10%">
-                                    <label for="recipient-name" class="control-label">可用时间:</label>
-                                    <i class="c-datepicker-range__icon kxiconfont icon-clock"></i>
-                                    <input placeholder="开始日期" name="start_at" class="c-datepicker-data-input" value="2018-01-01 04:00:00">
-                                    <span class="c-datepicker-range-separator">-</span>
-                                    <input placeholder="结束日期" name="end_at" class="c-datepicker-data-input" value="2018-03-01 04:00:00">
-                                </div>
-                            </span></p>
+                        可用时间：<br>
+                            <span id="keyongshijian"></span>
+<!--                        </p>-->
 
                         <p>座位：</p>
                         <ul id="seats_chose"></ul>
