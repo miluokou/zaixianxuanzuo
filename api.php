@@ -58,10 +58,9 @@ if(!empty($_GET['type'])){
         $res  = $classRom->room_diff($_GET,$seat_formate);
 
     }
-    if($_GET['type']=='leisidiff' && !empty($_GET['pai'])&& !empty($_GET['lie'])&& !empty($_GET['start_at'])&& !empty($_GET['end_at'])&& !empty($_GET['diffList'])){
+    if($_GET['type']=='leisidiff' && !empty($_GET['pai'])&& !empty($_GET['lie'])&& !empty($_GET['diffList'])){
         $seat_formate = json_encode($_GET['diffList']);
         $res  = $classRom->room_leisidiff($_GET,$seat_formate);
-
     }
     if($_GET['type']=='getOrdered' && !empty($_GET['classroomName'])){
         $res  = $classRom->get_ordered($_GET['classroomName']);

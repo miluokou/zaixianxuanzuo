@@ -47,37 +47,20 @@
             return $data;
         }
         public function room_leisidiff($get,$cccFormate2){
-
             $classRoomName =$get['classroomName'];
-//            var_dump($cccFormate2);die;
-            $start_at = $this->dateFormate($get['start_at']);
-
-            $end_at = $this->dateFormate($get['end_at']);
             $seat_formate = $cccFormate2;
             $res = json_decode($seat_formate,true);
             $indexOrderedShow = $this->indexOrderedShow($classRoomName);
-//            var_dump($indexOrderedShow['name'][0]['order_arr']);die;
             if(!empty($indexOrderedShow['name'][0]['order_arr']) && $indexOrderedShow['name'][0]['order_arr']!='null'){
                 $originOrdered = json_decode($indexOrderedShow['name'][0]['order_arr']);
             }else{
                 $originOrdered = array();
             }
-
-
-//            var_dump($originOrdered);die;
             $appendOrdered = array_merge($res,$originOrdered);
-
             $quchongzuowei = array_unique($appendOrdered);
             $bianchengzifuchuan = json_encode($quchongzuowei);
-
-//            var_dump($bianchengzifuchuan);die;
-//            $stmt = $this->conn->exec($sqlSelctSeat);
-//            var_dump($bianchengzifuchuan);die;
-            $sql = "UPDATE class_room SET order_arr ='".$bianchengzifuchuan."', start_at ='".$start_at."', end_at ='".$end_at."' WHERE name = '".$classRoomName."'";
-//            $sql = "INSERT INTO class_room (name,order_arr,start_at,end_at) VALUES ('".$classRoomName."','".$seat_formate."','".$start_at."','".$end_at."');";
-//            var_dump($sql);die;
+            $sql = "UPDATE class_room SET order_arr ='".$bianchengzifuchuan."' WHERE name = '".$classRoomName."'";
             $stmt = $this->conn->exec($sql);
-
             $data['name'] = $stmt;
             return $data;
         }
